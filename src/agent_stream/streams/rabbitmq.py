@@ -1,25 +1,22 @@
-import asyncio
-from typing import AsyncGenerator, Optional, TypeVar, cast, Callable, List, Any, Union
+from typing import (AsyncGenerator, Callable, List, Optional, TypeVar,
+                    Union, cast)
 
+from autogen_agentchat.base import Response, TaskResult
+from autogen_agentchat.messages import (BaseAgentEvent, BaseChatMessage,
+                                        ModelClientStreamingChunkEvent,
+                                        MultiModalMessage,
+                                        UserInputRequestedEvent)
 from autogen_core import CancellationToken
 from autogen_core.models import RequestUsage
 
-from autogen_agentchat.base import Response, TaskResult
-from autogen_agentchat.messages import (
-    BaseAgentEvent,
-    BaseChatMessage,
-    ModelClientStreamingChunkEvent,
-    MultiModalMessage,
-    UserInputRequestedEvent,
-)
-
-from agent_stream_filter.filter.filters import StreamFilter, resolve_filter
+from ..filters import StreamFilter, resolve_filter
+from ..managers import RabbitMQManager
 
 T = TypeVar("T", bound=TaskResult | Response)
 
 class RabbitMQStreamManager:
-    def __init__(self, rabbitmq, queue_name: str):
-        self.rabbitmq = rabbitmq
+    def __init__(self, rabbitmq: RabbitMQManager, queue_name: str):
+        self.rabbitmq: RabbitMQManager = rabbitmq
         self.queue_name = queue_name
         self.streaming_chunks: list[str] = []
         self.total_usage = RequestUsage(prompt_tokens=0, completion_tokens=0)
@@ -31,7 +28,7 @@ class RabbitMQStreamManager:
             message_type=message_type,
             content=content,
             end_of_stream=end_of_stream,
-            use_stream_queue=False
+            use_stream_queue=True
         )
 
     async def process_message(self, message: BaseAgentEvent | BaseChatMessage | T) -> Optional[T]:
@@ -90,7 +87,7 @@ class RabbitMQStreamManager:
 
 async def RabbitMQStream(
     stream: AsyncGenerator[BaseAgentEvent | BaseChatMessage | T, None],
-    rabbitmq,
+    rabbitmq: RabbitMQManager,
     queue_name: str,
     *,
     cancellation_token: Optional[CancellationToken] = None,
