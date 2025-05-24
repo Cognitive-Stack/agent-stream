@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "agent_stream"
-version = "0.1.0"
+version = "0.1.1"
 description = "Streaming utilities for agent/LLM systems (RabbitMQ, etc.)"
 authors = [
     { name = "Hieu TRAN", email = "hieutrantrung.it@gmail.com" }
@@ -16,6 +16,19 @@ dependencies = [
     "aio-pika>=9.3.0",
     "autogen-agentchat>=0.5.7,<0.6.0",
     "autogen-core>=0.5.7,<0.6.0"
+]
+keywords = ["streaming", "agent", "LLM", "RabbitMQ", "filters", "AI", "autogen", "message", "realtime"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Communications",
+    "Topic :: System :: Distributed Computing"
 ]
 
 [tool.hatch.build]
