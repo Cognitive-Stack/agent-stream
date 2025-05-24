@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "agent_stream"
-version = "0.1.1"
+version = "0.2.0"
 description = "Streaming utilities for agent/LLM systems (RabbitMQ, etc.)"
 authors = [
     { name = "Hieu TRAN", email = "hieutrantrung.it@gmail.com" }
@@ -17,7 +17,7 @@ dependencies = [
     "autogen-agentchat>=0.5.7,<0.6.0",
     "autogen-core>=0.5.7,<0.6.0"
 ]
-keywords = ["streaming", "agent", "LLM", "RabbitMQ", "filters", "AI", "autogen", "message", "realtime"]
+keywords = ["streaming", "agent", "LLM", "RabbitMQ", "sse", "filters", "AI", "autogen", "message", "realtime"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
@@ -30,6 +30,11 @@ classifiers = [
     "Topic :: Communications",
     "Topic :: System :: Distributed Computing"
 ]
+
+[project.urls]
+Homepage = "https://github.com/Cognitive-Stack/agent-stream"
+Repository = "https://github.com/Cognitive-Stack/agent-stream"
+Issues = "https://github.com/Cognitive-Stack/agent-stream/issues"
 
 [tool.hatch.build]
 # Use the src layout

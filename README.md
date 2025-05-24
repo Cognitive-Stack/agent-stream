@@ -81,6 +81,29 @@ result = await RabbitMQStream(
 await rabbitmq_manager.close()
 ```
 
+#### Example: Using SSEStream for Server-Sent Events (SSE)
+
+You can use `SSEStream` to stream agent or LLM events to clients over HTTP using Server-Sent Events (SSE). This is useful for real-time web applications.
+
+```python
+from agent_stream.streams import SSEStream
+from agent_stream.filters import FunctionCallStreamFilter, StreamChunkStreamFilter
+
+# Example usage in an async context (e.g., inside a FastAPI/Starlette endpoint)
+async for sse_event in SSEStream(
+    stream=team.run_stream(task="Your task message"),
+    filters=[
+        FunctionCallStreamFilter("signal_edit_file"),
+        StreamChunkStreamFilter("leader_agent")
+    ]
+):
+    # sse_event is a string formatted for SSE, e.g. 'event: ...\ndata: ...\nsource: ...\n\n'
+    # You can yield this directly in a FastAPI/Starlette StreamingResponse
+    print(sse_event)
+```
+
+This will yield SSE-formatted strings for each event, which you can send to the client in real time. Each event includes the event type, data, and source fields.
+
 ### Environment Variables
 - `RABBITMQ_HOST`, `RABBITMQ_PORT`, `RABBITMQ_USERNAME`, `RABBITMQ_PASSWORD` (for RabbitMQManager)
 
