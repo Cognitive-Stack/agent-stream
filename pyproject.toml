@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agent_stream"
+version = "0.1.0"
+description = "Streaming utilities for agent/LLM systems (RabbitMQ, etc.)"
+authors = [
+    { name = "Hieu TRAN", email = "hieutrantrung.it@gmail.com" }
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.10,<4.0"
+dependencies = [
+    "aio-pika>=9.3.0",
+    "autogen-agentchat>=0.5.7,<0.6.0",
+    "autogen-core>=0.5.7,<0.6.0"
+]
+
+[tool.hatch.build]
+# Use the src layout
+packages = ["src/agent_stream"]
